@@ -3,7 +3,6 @@ import axios from "axios";
 import { getRandomWordEng } from "../utilities/word-utils";
 import WordRow from "./Grid/WordRow";
 
-
 export default function WordleBoard() {
   const [randomWord, setRandomWord] = useState<string>("");
   const [definition, setDefinition] = useState<string>("");
@@ -23,11 +22,19 @@ export default function WordleBoard() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col justify-center">
       <WordRow guessingWord="water" />
-      <span>The solution is: {randomWord}</span>
+      <WordRow guessingWord="rover" />
+      <WordRow guessingWord="robot" />
+      <WordRow guessingWord="close" />
+      <WordRow guessingWord="maths" />
+      <WordRow guessingWord="inner" />
+
+      <span className="mx-10 w-25 bg-orange-300 margin-auto">
+        The solution is: {randomWord}
+      </span>
       <br />
       <span className="mx-10 w-25 bg-slate-300">Meaning: {definition}</span>
-    </>
+    </div>
   );
 }

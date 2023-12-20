@@ -12,12 +12,12 @@ export function Tile({ value, state }: TileProps) {
       : `${characterStateStyles[state]} text-white`;
 
   return (
-    <div className="flex justify-center my-[2px] m-[2px] items-center w-[58px] h-[58px] border-2">
-      <span
-        className={`flex self-center font-Inter font-bold text-[32px] uppercase ${stateStyles}`}
+    <div className="">
+      <div
+        className={`flex justify-center m-1 items-center w-[58px] h-[58px] border-2 self-center font-Inter font-bold text-[32px] uppercase ${stateStyles}`}
       >
         {value}
-      </span>
+      </div>
     </div>
   );
 }

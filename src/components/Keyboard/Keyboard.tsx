@@ -11,7 +11,7 @@ const Keyboard: React.FC = (): JSX.Element => {
     return (
       <div className="flex flex-row justify-center m-0">
         {set1.map((character, index) => {
-          return <Key index={index} letter={character}></Key>;
+          return <Key key={index} letter={character}></Key>;
         })}
       </div>
     );
@@ -21,7 +21,7 @@ const Keyboard: React.FC = (): JSX.Element => {
     return (
       <div className="flex flex-row justify-center m-0">
         {set2.map((character, index) => {
-          return <Key index={index} letter={character}></Key>;
+          return <Key key={index} letter={character}></Key>;
         })}
       </div>
     );
@@ -33,7 +33,7 @@ const Keyboard: React.FC = (): JSX.Element => {
         <EnterKey></EnterKey>
 
         {set3.map((character, index) => {
-          return <Key index={index} letter={character}></Key>;
+          return <Key key={index} letter={character}></Key>;
         })}
 
         <BackspaceKey></BackspaceKey>
@@ -42,7 +42,7 @@ const Keyboard: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-25 bg-slate-100 rounded-lg m-2 p-4 space-y-4">
+    <div className="flex flex-col justify-center w-25 rounded-lg m-2 p-4 space-y-4">
       <Set1 />
       <Set2 />
       <Set3 />
