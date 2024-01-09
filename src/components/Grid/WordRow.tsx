@@ -13,6 +13,7 @@ export default function WordRow({ guessingWord = "" }: WordRowProps) {
   const lettersArray: string[] = guessingWord
     .split("")
     .concat(Array(lettersRemaining).fill(""));
+  console.log("LETTERS ARRAY", lettersArray);
 
   const guessStates = computeGuess(guessingWord);
   console.log("GUESS STATES", guessStates);

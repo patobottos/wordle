@@ -1,16 +1,14 @@
 import wordBankEng from "../data/word-bank-EN.json"
 
-
 const word: string = getRandomWordEng();
 console.log('Word en WordUtils', word);
 
-
 export enum LetterState {
-  Miss, // Letter doesn't exist at all
-  Present, // Letter exists but wrong location
-  ManyPresent, // Letter exists, and many times, but wrong location 
-  Match, // Letter exists and is in the right location
-  AnotherMatch, // Letter exists, in right location, and there's another one in another location
+  Miss, // Letter doesn't exist at all - GRAY
+  Present, // Letter exists but wrong location - YELLOW
+  ManyPresent, // Letter exists, and many times, but wrong location - BLUE
+  Match, // Letter exists and is in the right location - GREEN
+  AnotherMatch, // Letter exists, in right location, and there's another one in another location - PINK
 }
 
 export const characterStateStyles = {
