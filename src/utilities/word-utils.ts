@@ -37,32 +37,32 @@ export function computeGuess(
   const answerAsArray: string[] = answerWord.split("");
   const answerLetterCount: Record<string, number> = {};
 
-  // IT RETURNS AN EMPTY ARRAY OF STATES IF WORD HAS LESS THAN 5 CHARACTERS
+  // IT RETURNS AN EMPTY ARRAY OF STATES WHEN WORDS HAVE DIFFERENT LENGTH
   if (guessingWord.length !== answerWord.length) {
     return results;
   }
 
-  // FUNCTION TO CHECK THE LETTER EXISTS, AND IT'S IN THE RIGHT LOCATION (GREEN COLOR)
-  function isMatch(guess: string, _answer: string, guessIndex: number, letterCount: Record<string, number>): boolean {
-    return letterCount[guess] > 0 && guessIndex === answerAsArray.indexOf(guess);
-  }
-
-  // FUNCTION TO CHECK THE LETTER EXISTS, BUT IS NOT IN THE RIGHT POSITION (YELLOW COLOR)
-  function isPresent(guess: string, _answer: string, guessIndex: number, letterCount: Record<string, number>): boolean {
-    return letterCount[guess] > 0 && guessIndex !== answerAsArray.indexOf(guess);
-  }
-
-  // Count the occurrences of each letter in the answer word
+  // IT COUNTS THE OCCURRENCES OF EACH LETTER IN THE ANSWER WORD
   answerAsArray.forEach(letter => {
     answerLetterCount[letter] = (answerLetterCount[letter] || 0) + 1;
   });
 
+  // FUNCTION TO CHECK THE LETTER EXISTS, AND IT'S IN THE RIGHT LOCATION (GREEN COLOR)
+  function isMatch(guess: string, _answer: string, guessIndex: number): boolean {
+    return answerLetterCount[guess] > 0 && guessIndex === answerAsArray.indexOf(guess);
+  }
+
+  // FUNCTION TO CHECK THE LETTER EXISTS, BUT IS NOT IN THE RIGHT POSITION (YELLOW COLOR)
+  function isPresent(guess: string, _answer: string, guessIndex: number): boolean {
+    return answerLetterCount[guess] > 0 && guessIndex !== answerAsArray.indexOf(guess);
+  }
+
   for (let i = 0; i < answerAsArray.length; i++) {
-    if (isMatch(guessAsArray[i], answerAsArray[i], i, answerLetterCount)) {
+    if (isMatch(guessAsArray[i], answerAsArray[i], i)) {
       results.push(LetterState.Match);
       // Decrement the count to handle repeated letters
       answerLetterCount[guessAsArray[i]]--;
-    } else if (isPresent(guessAsArray[i], answerAsArray[i], i, answerLetterCount)) {
+    } else if (isPresent(guessAsArray[i], answerAsArray[i], i)) {
       results.push(LetterState.Present);
       // Decrement the count to handle repeated letters
       answerLetterCount[guessAsArray[i]]--;
@@ -73,4 +73,5 @@ export function computeGuess(
 
 
   return results;
+
 }

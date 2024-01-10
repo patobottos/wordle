@@ -1,20 +1,29 @@
 import { describe, expect, test } from 'vitest';
 import { computeGuess, isValidGuess, LetterState, getRandomWordEng } from './word-utils';
-import { render, screen } from "./test/test-utils";
 
 describe("getRandomWord", () => {
-  test("random word", () => {
+  test("it gives random word", () => {
     expect(getRandomWordEng()).toBeTruthy();
     expect(getRandomWordEng().length).toEqual(5);
   });
 });
 
+describe("isValidGuess", () => {
+  test("it detects a valid word", () => {
+    expect(isValidGuess("close")).toBe(true);
+  });
+
+  test("it detects and invalid word", () => {
+    expect(isValidGuess("frdsa")).toBe(false);
+  });
+});
+
 describe("computeGuess", () => {
-  test('returns empty array when given incomplete guess', () => {
+  test('it returns empty array when given incomplete guess', () => {
     expect(computeGuess('sun', 'close')).toEqual([]);
   });
 
-  test("works with Match, Present and Miss", () => {
+  test("it works with Match, Present and Miss", () => {
     expect(computeGuess('cally', 'close')).toEqual([
       LetterState.Match,
       LetterState.Miss,
@@ -24,7 +33,7 @@ describe("computeGuess", () => {
     ]);
   });
 
-  test("works with exact Match", () => {
+  test("it works with exact Match", () => {
     expect(computeGuess('close', 'close')).toEqual([
       LetterState.Match,
       LetterState.Match,
@@ -34,7 +43,7 @@ describe("computeGuess", () => {
     ]);
   });
 
-  test("works with all Miss", () => {
+  test("it works with all Miss", () => {
     expect(computeGuess('trump', 'close')).toEqual([
       LetterState.Miss,
       LetterState.Miss,
@@ -44,17 +53,17 @@ describe("computeGuess", () => {
     ]);
   });
 
-  test('only does one match when two letters exist', () => {
-    expect(computeGuess('solid', 'boost')).toEqual([
-      LetterState.Present,
-      LetterState.Match,
+  test('it only does 1 Present when 2 letters exist', () => {
+    expect(computeGuess('solid', 'floor')).toEqual([
       LetterState.Miss,
+      LetterState.Present,
+      LetterState.Present,
       LetterState.Miss,
       LetterState.Miss,
     ]);
   });
 
-  test('when 2 letters are present but answer has only 1 of those letters', () => {
+  test('it works when 2 letters are present but answer has only 1 of those letters', () => {
     expect(computeGuess('allol', 'smelt')).toEqual([
       LetterState.Miss,
       LetterState.Present,
