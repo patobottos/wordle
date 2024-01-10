@@ -35,28 +35,42 @@ export function computeGuess(
   const results: LetterState[] = [];
   const guessAsArray: string[] = guessingWord.split("");
   const answerAsArray: string[] = answerWord.split("");
+  const answerLetterCount: Record<string, number> = {};
 
-  //FUNCTIONS TO FIND DIFFERENT STATES OF THE GUESSING LETTER
-
-  /// FUNCTION TO CHECK THE LETTER EXISTS, AND IT'S IN THE RIGHT LOCATION (GREEN COLOR)
-  function isMatch(guess: string, _answer: string, guessIndex: number): boolean {
-    return answerAsArray.includes(guess) && guessIndex === answerAsArray.indexOf(guess);
+  // IT RETURNS AN EMPTY ARRAY OF STATES IF WORD HAS LESS THAN 5 CHARACTERS
+  if (guessingWord.length !== answerWord.length) {
+    return results;
   }
 
-  /// FUNCTION TO CHECK LETTER EXISTS, BUT IS NOT IN THE RIGHT POSITION (YELLOW COLOR)
-  function isPresent(guess: string, _answer: string, guessIndex: number): boolean {
-    return answerAsArray.includes(guess) && guessIndex !== answerAsArray.indexOf(guess)
+  // FUNCTION TO CHECK THE LETTER EXISTS, AND IT'S IN THE RIGHT LOCATION (GREEN COLOR)
+  function isMatch(guess: string, _answer: string, guessIndex: number, letterCount: Record<string, number>): boolean {
+    return letterCount[guess] > 0 && guessIndex === answerAsArray.indexOf(guess);
   }
+
+  // FUNCTION TO CHECK THE LETTER EXISTS, BUT IS NOT IN THE RIGHT POSITION (YELLOW COLOR)
+  function isPresent(guess: string, _answer: string, guessIndex: number, letterCount: Record<string, number>): boolean {
+    return letterCount[guess] > 0 && guessIndex !== answerAsArray.indexOf(guess);
+  }
+
+  // Count the occurrences of each letter in the answer word
+  answerAsArray.forEach(letter => {
+    answerLetterCount[letter] = (answerLetterCount[letter] || 0) + 1;
+  });
 
   for (let i = 0; i < answerAsArray.length; i++) {
-    if (isMatch(guessAsArray[i], answerAsArray[i], guessAsArray.indexOf(guessAsArray[i]))) {
+    if (isMatch(guessAsArray[i], answerAsArray[i], i, answerLetterCount)) {
       results.push(LetterState.Match);
-    } else if (isPresent(guessAsArray[i], answerAsArray[i], guessAsArray.indexOf(guessAsArray[i]))) {
+      // Decrement the count to handle repeated letters
+      answerLetterCount[guessAsArray[i]]--;
+    } else if (isPresent(guessAsArray[i], answerAsArray[i], i, answerLetterCount)) {
       results.push(LetterState.Present);
+      // Decrement the count to handle repeated letters
+      answerLetterCount[guessAsArray[i]]--;
     } else {
       results.push(LetterState.Miss);
     }
   }
+
 
   return results;
 }
