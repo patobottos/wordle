@@ -1,4 +1,4 @@
-import { WORD_LENGTH } from "../../utilities/store";
+import { useStore, WORD_LENGTH } from "../../utilities/store";
 import { computeGuess, LetterState } from "../../utilities/word-utils";
 import { Tile } from "./Tile";
 
@@ -9,14 +9,13 @@ type WordRowProps = {
 };
 
 export default function WordRow({ guessingWord = "" }: WordRowProps) {
+  const answerWord = useStore((state) => state.answerWord);
   const lettersRemaining = WORD_LENGTH - guessingWord.length;
   const lettersArray: string[] = guessingWord
     .split("")
     .concat(Array(lettersRemaining).fill(""));
-  console.log("LETTERS ARRAY", lettersArray);
 
-  const guessStates = computeGuess(guessingWord);
-  console.log("GUESS STATES", guessStates);
+  const guessStates = computeGuess(guessingWord, answerWord);
 
   return (
     <div className="flex flex-col align-middle justify-center text-center">

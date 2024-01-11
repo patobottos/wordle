@@ -1,9 +1,10 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { computeGuess, getRandomWordEng, LetterState } from './word-utils';
 
 export const WORD_LENGTH = 5;
-export const NUMBER_OF_GUESSES = 6;
+export const GUESS_CHANCES = 6;
+
 interface StoreState {
   answerWord: string;
   guesses: string[];
@@ -26,6 +27,7 @@ export const useStore = create<StoreState>()(
     {
       name: "wordle",
     },
-
   )
 );
+
+// useStore.persist.clearStorage();

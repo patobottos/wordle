@@ -1,7 +1,6 @@
 import wordBankEng from "../data/word-bank-EN.json"
+import axios from 'axios';
 
-const word: string = getRandomWordEng();
-console.log('Word en WordUtils', word);
 
 export enum LetterState {
   Miss, // Letter doesn't exist at all - GRAY
@@ -21,6 +20,16 @@ export function getRandomWordEng(): string {
   return wordBankEng[randomIndex];
 }
 
+// FUNCTION TO FIND THE DEFINITION OF A VALID WORD IN THE DICTIONARY
+export async function findDefinition(word: string): Promise<string> {
+  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+  const definition = await axios
+    .get(url)
+    .then((res) => res.data[0].meanings[0].definitions[0].definition);
+  return definition;
+}
+//console.log('test diccionario => water:', findDefinition('water'));
+
 // FUNCTION TO CHECK IF THE GUESS IS A VALID WORD
 export function isValidGuess(word: string): boolean {
   return wordBankEng.includes(word);
@@ -29,7 +38,7 @@ export function isValidGuess(word: string): boolean {
 // FUNCTION TO AVALUATE EACH LETTER OF THE GUESS. IT RETURNS AN ARRAY OF STATES FOR EACH LETTER
 export function computeGuess(
   guessingWord: string,
-  answerWord: string = word
+  answerWord: string
 ): LetterState[] {
 
   const results: LetterState[] = [];
