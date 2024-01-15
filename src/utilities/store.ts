@@ -9,7 +9,7 @@ interface StoreState {
   answerWord: string;
   guesses: string[];
   addGuess: (guess: string) => void;
-
+  newGame: () => void;
 }
 
 
@@ -22,6 +22,12 @@ export const useStore = create<StoreState>()(
         set(state => ({
           guesses: [...state.guesses, guess]
         }))
+      },
+      newGame: () => {
+        set({
+          answerWord: getRandomWordEng(),
+          guesses: [],
+        })
       }
     }),
     {

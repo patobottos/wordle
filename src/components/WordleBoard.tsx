@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition } from "../utilities/word-utils";
+import Button from "./Button";
 
 export default function WordleBoard() {
   const state = useStore();
@@ -10,6 +11,7 @@ export default function WordleBoard() {
   //console.log("answer:", state.answerWord);
   //console.log("definition: ", definition);
 
+  // FETCH THE DEFINITION OF THE RANDOM WORD
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,6 +36,8 @@ export default function WordleBoard() {
 
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
+  const isGameOver = state.guesses.length === GUESS_CHANCES;
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGuess = e.target.value;
 
@@ -53,6 +57,7 @@ export default function WordleBoard() {
           type="text"
           value={guess}
           onChange={onChange}
+          disabled={isGameOver}
           placeholder="your guess here"
           className="m-1 border-2 border-gray-400"
         />
@@ -61,13 +66,30 @@ export default function WordleBoard() {
         <WordRow key={index} guessingWord={word} />
       ))}
 
-      <div className="mt-4 mx-10 w-25 bg-slate-300  max-w-60">
-        <span>Meaning: {definition} </span>
+      <div className="mt-4 w-25 bg-slate-300  max-w-60">
+        Meaning: "<span className="italic">{definition}</span>"
       </div>
       <br />
-      <div className="mx-10 w-25 bg-orange-300 justify-center">
-        The answer is: {state.answerWord}
-      </div>
+
+      {isGameOver && (
+        <div
+          role="modal"
+          className="absolute bg-opacity-90 bg-white border border-gray-400 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[150px]"
+        >
+          <p className="mt-4 font-bold tracking-wider">GAME OVER!</p>
+          <br />
+          <div className="mx-10 w-25 bg-orange-300 justify-center">
+            <p>The answer was: {state.answerWord}</p>
+          </div>
+          <Button
+            children="New Game"
+            onClick={() => {
+              state.newGame();
+              setGuess("");
+            }}
+          ></Button>
+        </div>
+      )}
     </div>
   );
 }
