@@ -9,9 +9,8 @@ interface StoreState {
   answerWord: string;
   guesses: string[];
   addGuess: (guess: string) => void;
-  newGame: () => void;
+  newGame(initialGuess?: string[]): void;
 }
-
 
 export const useStore = create<StoreState>()(
   persist(
