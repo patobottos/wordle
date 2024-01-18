@@ -8,6 +8,7 @@ export const GUESS_CHANCES = 6;
 interface StoreState {
   answerWord: string;
   guesses: string[];
+
   addGuess: (guess: string) => void;
   newGame(initialGuess?: string[]): void;
 }
