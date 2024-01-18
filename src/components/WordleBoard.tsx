@@ -32,7 +32,9 @@ export default function WordleBoard() {
 
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
-  const isGameOver = state.guessRows.length === GUESS_CHANCES;
+  const isGameOver = state.gameState === "lost";
+  const gotAWinner = state.gameState === "won";
+  const endOfGame = state.gameState !== "playing";
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGuess = e.target.value;
@@ -70,18 +72,28 @@ export default function WordleBoard() {
         </div>
       )}
 
-      {isGameOver && (
+      {endOfGame && (
         <div
           role="modal"
-          className="absolute bg-opacity-90 bg-teal-100 border border-teal-600 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[160px] shadow-lg"
+          className="absolute bg-opacity-90 bg-teal-100 border border-teal-600 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[150px] shadow-lg"
         >
-          <p className="mt-6 font-bold tracking-wider uppercase">Game over!</p>
+          <p className="mt-3 font-bold tracking-wider uppercase">
+            {isGameOver ? (
+              "Game over!"
+            ) : (
+              <div>
+                <span>Congratulations!</span>
+                <br />
+                <span>We've got a winner!</span>
+              </div>
+            )}
+          </p>
           <div className="flex flex-col mx-10 mt-4 p-2 w-50 bg-orange-200 rounded shadow-lg justify-center">
             <p>The answer was:</p>
             <p className="text-center font-Inter font-bold text-[32px] uppercase tracking-widest">
               {state.answerWord}
             </p>
-            <p className="mt-10">
+            <p className="mt-6">
               Definition: "<span className="italic">{definition}</span>"
             </p>
           </div>

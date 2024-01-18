@@ -13,29 +13,45 @@ interface GuessRow {
 interface StoreState {
   answerWord: string;
   guessRows: GuessRow[];
+  gameState: 'playing' | 'won' | 'lost';
   addGuess: (guess: string) => void;
   newGame(initialGuess?: string[]): void;
 }
 
 export const useStore = create<StoreState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       answerWord: getRandomWordEng(),
       guessRows: [],
+      gameState: 'playing',
       addGuess: (guess: string) => {
-        set(state => ({
-          guessRows: [
-            ...state.guessRows,
-            {
-              guess,
-              result: computeGuess(guess, state.answerWord)
-            }]
-        }))
+        const result = computeGuess(guess, get().answerWord);
+
+        const didWin = result.every(i => i === LetterState.Match);
+
+        const guessRows = [
+          ...get().guessRows,
+          {
+            guess,
+            result,
+          }
+        ];
+
+        set({
+          guessRows,
+          gameState: didWin
+            ? 'won'
+            : guessRows.length === GUESS_CHANCES
+              ? 'lost'
+              : 'playing',
+        })
       },
+
       newGame: () => {
         set({
           answerWord: getRandomWordEng(),
           guessRows: [],
+          gameState: 'playing',
         })
       }
     }),
