@@ -73,4 +73,14 @@ describe("computeGuess", () => {
     ]);
   });
 
+  test('it returns all match in a word when answerWord repeats 2 letters', () => {
+    expect(computeGuess('floor', 'floor')).toEqual([
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+    ]);
+  });
+
 });

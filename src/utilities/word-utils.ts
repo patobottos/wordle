@@ -1,7 +1,6 @@
 import wordBankEng from "../data/word-bank-EN.json"
 import axios from 'axios';
 
-
 export enum LetterState {
   Miss, // Letter doesn't exist at all - GRAY
   Present, // Letter exists but wrong location - YELLOW
@@ -40,6 +39,12 @@ export function computeGuess(
   guessingWord: string,
   answerWord: string
 ): LetterState[] {
+
+
+  // FIRST, WE CHECK FOR A FULL MATCH CASE
+  if (guessingWord === answerWord) {
+    return Array.from({ length: guessingWord.length }, () => LetterState.Match);
+  }
 
   const results: LetterState[] = [];
   const guessAsArray: string[] = guessingWord.split("");
@@ -80,7 +85,5 @@ export function computeGuess(
     }
   }
 
-
   return results;
-
 }
