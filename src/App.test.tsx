@@ -10,7 +10,7 @@ describe("App", () => {
   });
 
   test("it shows empty state", () => {
-    useStore.setState({ guesses: [] });
+    useStore.setState({ guessRows: [] });
     render(<App />);
     expect(screen.queryByText("Game over")).toBeNull();
     expect(document.querySelectorAll("main div")).toHaveLength(72);
@@ -18,7 +18,9 @@ describe("App", () => {
   });
 
   test("it shows one row of guesses", () => {
-    useStore.setState({ guesses: ["hello"] });
+    useStore.setState({
+      guessRows: [{ guess: "hello" }],
+    });
     render(<App />);
     expect(screen.queryByText("Game over")).toBeNull();
     expect(document.querySelector("main")?.textContent).toEqual("hello");
@@ -26,7 +28,14 @@ describe("App", () => {
 
   test("it shows game over state", () => {
     useStore.setState({
-      guesses: ["hello", "hello", "hello", "hello", "hello", "hello"],
+      guessRows: [
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+      ],
       answerWord: "close", //  When I use 'hello' keeps on passing the test, and it shouldn't
     });
     render(<App />);
@@ -38,7 +47,14 @@ describe("App", () => {
 
   test("it can start a new game", () => {
     useStore.setState({
-      guesses: ["hello", "hello", "hello", "hello", "hello", "hello"],
+      guessRows: [
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+        { guess: "hello" },
+      ],
       answerWord: "close", //  When I use 'hello' keeps on passing the test, and it shouldn't
     });
     render(<App />);

@@ -5,10 +5,14 @@ import { computeGuess, getRandomWordEng, LetterState } from './word-utils';
 export const WORD_LENGTH = 5;
 export const GUESS_CHANCES = 6;
 
+interface GuessRow {
+  guess: string;
+  result?: LetterState[];
+}
+
 interface StoreState {
   answerWord: string;
-  guesses: string[];
-
+  guessRows: GuessRow[];
   addGuess: (guess: string) => void;
   newGame(initialGuess?: string[]): void;
 }
@@ -17,16 +21,21 @@ export const useStore = create<StoreState>()(
   persist(
     (set) => ({
       answerWord: getRandomWordEng(),
-      guesses: ['close', 'local', 'claim'],
+      guessRows: [],
       addGuess: (guess: string) => {
         set(state => ({
-          guesses: [...state.guesses, guess]
+          guessRows: [
+            ...state.guessRows,
+            {
+              guess,
+              result: computeGuess(guess, state.answerWord)
+            }]
         }))
       },
       newGame: () => {
         set({
           answerWord: getRandomWordEng(),
-          guesses: [],
+          guessRows: [],
         })
       }
     }),

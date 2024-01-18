@@ -22,19 +22,17 @@ export default function WordleBoard() {
     fetchData();
   }, [state.answerWord]);
 
-  let rows = [...state.guesses];
-
-  let currentRow = 0;
+  let rows = [...state.guessRows];
 
   if (rows.length < GUESS_CHANCES) {
-    currentRow = rows.push(guess);
+    rows.push({ guess });
   }
 
   const guessesRemaining = GUESS_CHANCES - rows.length;
 
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
-  const isGameOver = state.guesses.length === GUESS_CHANCES;
+  const isGameOver = state.guessRows.length === GUESS_CHANCES;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGuess = e.target.value;
@@ -61,8 +59,8 @@ export default function WordleBoard() {
         />
       </header>
       <main>
-        {rows.map((word, index) => (
-          <WordRow key={index} guessingWord={word} />
+        {rows.map(({ guess, result }, index) => (
+          <WordRow key={index} guessingWord={guess} result={result} />
         ))}
       </main>
 
@@ -75,20 +73,21 @@ export default function WordleBoard() {
       {isGameOver && (
         <div
           role="modal"
-          className="absolute bg-opacity-90 bg-white border border-gray-400 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[160px]"
+          className="absolute bg-opacity-90 bg-teal-100 border border-teal-600 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[160px] shadow-lg"
         >
           <p className="mt-6 font-bold tracking-wider uppercase">Game over!</p>
-          <div className="flex flex-col mx-10 mt-4 p-2 w-50 bg-red-300 justify-center">
+          <div className="flex flex-col mx-10 mt-4 p-2 w-50 bg-orange-200 rounded shadow-lg justify-center">
             <p>The answer was:</p>
             <p className="text-center font-Inter font-bold text-[32px] uppercase tracking-widest">
               {state.answerWord}
             </p>
-            <p className="mt-2">
-              Meaning: "<span className="italic">{definition}</span>"
+            <p className="mt-10">
+              Definition: "<span className="italic">{definition}</span>"
             </p>
           </div>
           <Button
             children="New Game"
+            color="black"
             onClick={() => {
               state.newGame();
               setGuess("");

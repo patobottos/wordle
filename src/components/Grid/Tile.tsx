@@ -14,7 +14,9 @@ export function Tile({ value, state }: TileProps) {
   return (
     <div className="">
       <div
-        className={`flex justify-center m-1 items-center w-[58px] h-[58px] border-2 self-center font-Inter font-bold text-[32px] uppercase ${stateStyles}`}
+        className={`flex justify-center m-1 items-center w-[58px] h-[58px] border-2 self-center font-Inter font-bold text-[32px] uppercase 
+        before:inline-block before:content-['_']
+        ${stateStyles}`}
       >
         {value}
       </div>
