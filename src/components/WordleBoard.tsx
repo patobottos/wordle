@@ -8,8 +8,6 @@ export default function WordleBoard() {
   const state = useStore();
   const [guess, setGuess] = useState<string>("");
   const [definition, setDefinition] = useState<string>("");
-  //console.log("answer:", state.answerWord);
-  //console.log("definition: ", definition);
 
   // FETCH THE DEFINITION OF THE RANDOM WORD
   useEffect(() => {
