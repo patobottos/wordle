@@ -20,11 +20,9 @@ interface StoreState {
 
 export const useStore = create<StoreState>()(
   persist(
-    (set, get) => ({
-      answerWord: getRandomWordEng(),
-      guessRows: [],
-      gameState: 'playing',
-      addGuess: (guess: string) => {
+    (set, get) => {
+
+      const addGuess = (guess: string) => {
         const result = computeGuess(guess, get().answerWord);
 
         const didWin = result.every(i => i === LetterState.Match);
@@ -45,16 +43,23 @@ export const useStore = create<StoreState>()(
               ? 'lost'
               : 'playing',
         })
-      },
+      };
 
-      newGame: () => {
-        set({
-          answerWord: getRandomWordEng(),
-          guessRows: [],
-          gameState: 'playing',
-        })
+      return {
+        answerWord: getRandomWordEng(),
+        guessRows: [],
+        gameState: 'playing',
+        addGuess,
+
+        newGame: (initialRows = []) => {
+          set({
+            answerWord: getRandomWordEng(),
+            guessRows: [],
+            gameState: 'playing',
+          })
+        }
       }
-    }),
+    },
     {
       name: "wordle",
     },
