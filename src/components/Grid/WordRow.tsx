@@ -21,7 +21,6 @@ export default function WordRow({
     <div className="flex flex-col align-middle justify-center text-center">
       <div className="flex">
         {lettersArray.map((char, index) => {
-          // HERE, IF GUESS === RANDOM WORD => return tiles ALL STATES GREEN : IF NOT =>
           return <Tile key={index} value={char} state={result[index]} />;
         })}
       </div>

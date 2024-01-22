@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import useGuess from "../hooks/useGuess";
 import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition } from "../utilities/word-utils";
+import useGuess from "../hooks/useGuess";
 import Button from "./Button";
 
 export default function WordleBoard() {
   const state = useStore();
-  const [guess, setGuess] = useGuess();
+  //  const [guess, setGuess] = useState<string>(""); // THIS WAS OLD LINE 11
+  const [guess, setGuess] = useGuess("");
   const [definition, setDefinition] = useState<string>("");
 
   // FETCH THE DEFINITION OF THE RANDOM WORD
@@ -51,7 +52,18 @@ export default function WordleBoard() {
 
   return (
     <div className="flex flex-col justify-center max-w-[370px]">
-      <header></header>
+      <header>
+        {/*
+        <input
+          type="text"
+          value={guess}
+          onChange={onChange}
+          disabled={isGameOver}
+          placeholder="your guess here"
+          className="m-1 border-2 border-gray-400"
+        />
+*/}
+      </header>
       <main>
         {rows.map(({ guess, result }, index) => (
           <WordRow key={index} guessingWord={guess} result={result} />
@@ -74,7 +86,7 @@ export default function WordleBoard() {
               "Game over!"
             ) : (
               <div>
-                <span> 🎉 Congratulations! 🎉</span>
+                <span>Congratulations!</span>
                 <br />
                 <span>We've got a winner!</span>
               </div>
