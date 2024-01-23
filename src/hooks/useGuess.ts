@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
-import { WORD_LENGTH } from "../utilities/store";
-import { useStore } from "zustand";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState, useRef } from "react";
+import { WORD_LENGTH, useStore } from "../utilities/store";
 
+function useGuess(): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>,
+  (letter: string) => void
+] {
 
-function useGuess() {
-
-
-
-  const [guess, setGuess] = useState<string>("");
+  const addGuess = useStore((s) => s.addGuess);
+  const [guess, setGuess] = useState("");
+  const previousGuess = usePrevious(guess);
 
   const onKeyDown = (e: KeyboardEvent) => {
-    let letter = e.key;
+    const letter = e.key;
 
     setGuess((currentGuess) => {
       const newGuess = letter.length === 1 ? currentGuess + letter : currentGuess;
@@ -19,32 +22,18 @@ function useGuess() {
       switch (letter) {
         case 'Backspace':
           return newGuess.slice(0, -1);
-
+        case 'Enter':
+          if (newGuess.length === WORD_LENGTH) {
+            return "";
+          }
       }
 
       if (currentGuess.length === WORD_LENGTH) {
         return currentGuess;
       }
+
       return newGuess;
     });
-
-
-
-    /*
-    setGuess((currentGuess) => {
-      const newGuess = letter.length === 1 ? currentGuess + letter : currentGuess;
-
-      switch (letter) {
-        case `Backspace`: return newGuess.slice(0, -1);
-      }
-
-      if (currentGuess.length === WORD_LENGTH) {
-        return currentGuess;
-      }
-      return newGuess;
-    })
-
-    */
   };
 
 
@@ -53,11 +42,28 @@ function useGuess() {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     }
-
   }, [])
+
+  useEffect(() => {
+    if (guess.length === 0 && previousGuess && previousGuess?.length === WORD_LENGTH) {
+      addGuess(previousGuess);
+    }
+  }, [guess]);
 
   return [guess, setGuess];
 
-
 }
+
+
+function usePrevious<T>(value: T): T {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref: any = useRef<T>();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
+}
+
 export default useGuess;

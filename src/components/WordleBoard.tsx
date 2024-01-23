@@ -7,8 +7,7 @@ import Button from "./Button";
 
 export default function WordleBoard() {
   const state = useStore();
-  //  const [guess, setGuess] = useState<string>(""); // THIS WAS OLD LINE 11
-  const [guess, setGuess] = useGuess("");
+  const [guess, setGuess] = useGuess();
   const [definition, setDefinition] = useState<string>("");
 
   // FETCH THE DEFINITION OF THE RANDOM WORD
@@ -35,35 +34,11 @@ export default function WordleBoard() {
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
   const isGameOver = state.gameState === "lost";
-  const gotAWinner = state.gameState === "won";
+  // const gotAWinner = state.gameState === "won"; => NOT USING IT BY NOW
   const endOfGame = state.gameState !== "playing";
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newGuess = e.target.value;
-
-    if (newGuess.length === WORD_LENGTH) {
-      state.addGuess(newGuess);
-      setGuess("");
-      return;
-    }
-
-    setGuess(newGuess);
-  };
 
   return (
     <div className="flex flex-col justify-center max-w-[370px]">
-      <header>
-        {/*
-        <input
-          type="text"
-          value={guess}
-          onChange={onChange}
-          disabled={isGameOver}
-          placeholder="your guess here"
-          className="m-1 border-2 border-gray-400"
-        />
-*/}
-      </header>
       <main>
         {rows.map(({ guess, result }, index) => (
           <WordRow key={index} guessingWord={guess} result={result} />
@@ -79,11 +54,13 @@ export default function WordleBoard() {
       {endOfGame && (
         <div
           role="modal"
-          className="absolute bg-opacity-90 bg-teal-100 border border-teal-600 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[150px] shadow-lg"
+          className="absolute bg-opacity-90 bg-teal-100 border border-teal-600 rounded text-center w-[370px] h-[400px] p-4 left-0 right-0 mx-auto top-[110px] shadow-lg"
         >
           <p className="mt-3 font-bold tracking-wider uppercase">
             {isGameOver ? (
-              "Game over!"
+              <div>
+                <span>Game over! 😵 </span>
+              </div>
             ) : (
               <div>
                 <span>Congratulations!</span>
