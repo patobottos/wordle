@@ -30,8 +30,23 @@ export async function findDefinition(word: string): Promise<string> {
 //console.log('test diccionario => water:', findDefinition('water'));
 
 // FUNCTION TO CHECK IF THE GUESS IS A VALID WORD
-export function isValidGuess(word: string): boolean {
+/*export function isValidGuess(word: string): boolean {
   return wordBankEng.includes(word);
+}*/
+
+export async function isValidGuess(word: string): Promise<boolean> {
+  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+  const validWord = await axios
+    .get(url)
+    .then((res) => res.data[0].word)
+    .catch((error) => {
+      console.log('error', error.message)
+      alert("Word not found in our word bank. 😰 \n Please type another one!")
+      return false;
+    })
+  console.log('validWord =>', validWord);
+  console.log('validWord.length =>', validWord.length);
+  return validWord.length === 5 ? true : false;
 }
 
 // FUNCTION TO AVALUATE EACH LETTER OF THE GUESS. IT RETURNS AN ARRAY OF STATES FOR EACH LETTER
