@@ -11,6 +11,7 @@ type WordRowProps = {
 export default function WordRow({
   guessingWord = "",
   result = [],
+  className = "",
 }: WordRowProps) {
   const lettersRemaining = WORD_LENGTH - guessingWord.length;
   const lettersArray: string[] = guessingWord
@@ -19,7 +20,7 @@ export default function WordRow({
 
   return (
     <div className="flex flex-col align-middle justify-center text-center">
-      <div className="flex">
+      <div className={`flex ${className}`}>
         {lettersArray.map((char, index) => {
           return <Tile key={index} value={char} state={result[index]} />;
         })}

@@ -19,21 +19,7 @@ export function getRandomWordEng(): string {
   return wordBankEng[randomIndex];
 }
 
-// FUNCTION TO FIND THE DEFINITION OF A VALID WORD IN THE DICTIONARY
-export async function findDefinition(word: string): Promise<string> {
-  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
-  const definition = await axios
-    .get(url)
-    .then((res) => res.data[0].meanings[0].definitions[0].definition);
-  return definition;
-}
-//console.log('test diccionario => water:', findDefinition('water'));
-
-// FUNCTION TO CHECK IF THE GUESS IS A VALID WORD
-/*export function isValidGuess(word: string): boolean {
-  return wordBankEng.includes(word);
-}*/
-
+// FUNCTION TO CHECK IN THE DICTIONARY IF THE GUESS IS A VALID WORD
 export async function isValidGuess(word: string): Promise<boolean> {
   const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
   const validWord = await axios
@@ -47,6 +33,15 @@ export async function isValidGuess(word: string): Promise<boolean> {
   console.log('validWord =>', validWord);
   console.log('validWord.length =>', validWord.length);
   return validWord.length === 5 ? true : false;
+}
+
+// FUNCTION TO FIND THE DEFINITION OF A VALID WORD IN THE DICTIONARY
+export async function findDefinition(word: string): Promise<string> {
+  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+  const definition = await axios
+    .get(url)
+    .then((res) => res.data[0].meanings[0].definitions[0].definition);
+  return definition;
 }
 
 // FUNCTION TO AVALUATE EACH LETTER OF THE GUESS. IT RETURNS AN ARRAY OF STATES FOR EACH LETTER

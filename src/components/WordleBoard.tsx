@@ -7,10 +7,9 @@ import Button from "./Button";
 export default function WordleBoard() {
   const state = useStore();
   const [guess, setGuess] = useGuess();
-  const [definition, setDefinition] = useState<string>("");
   const [getInvalidGuess, setInvalidGuess] = useState(false);
+  const [definition, setDefinition] = useState<string>("");
 
-  /* NOT HERE YET!
   useEffect(() => {
     let id: NodeJS.Timeout;
     if (getInvalidGuess) {
@@ -18,7 +17,7 @@ export default function WordleBoard() {
     }
     return () => clearTimeout(id);
   }, [getInvalidGuess]);
-*/
+
   const addGuess = useStore((s) => s.addGuess);
   const previousGuess = usePrevious(guess);
 
@@ -30,17 +29,18 @@ export default function WordleBoard() {
           if (validation === true) {
             setInvalidGuess(false);
             addGuess(previousGuess);
+          } else {
+            setInvalidGuess(true);
+            setGuess(previousGuess);
           }
         } catch (error) {
-          console.log("error de palabra");
-          setInvalidGuess(true);
-          setGuess(previousGuess);
+          console.log(error);
         }
       };
 
       validateGuess();
     }
-  }, [guess]);
+  }, [guess, previousGuess]);
 
   /*
   useEffect(() => {
@@ -71,8 +71,10 @@ export default function WordleBoard() {
 
   let rows = [...state.guessRows];
 
+  let currentRow = 0;
+
   if (rows.length < GUESS_CHANCES) {
-    rows.push({ guess });
+    currentRow = rows.push({ guess }) - 1;
   }
 
   const guessesRemaining = GUESS_CHANCES - rows.length;
@@ -80,14 +82,21 @@ export default function WordleBoard() {
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
   const isGameOver = state.gameState === "lost";
-  // const gotAWinner = state.gameState === "won"; => NOT USING IT BY NOW
+  // const gotAWinner = state.gameState === "won"; // => NOT USING IT BY NOW
   const endOfGame = state.gameState !== "playing";
 
   return (
     <div className="flex flex-col justify-center max-w-[370px]">
       <main>
         {rows.map(({ guess, result }, index) => (
-          <WordRow key={index} guessingWord={guess} result={result} />
+          <WordRow
+            key={index}
+            guessingWord={guess}
+            result={result}
+            className={
+              getInvalidGuess && currentRow === index ? "animate-headShake" : ""
+            }
+          />
         ))}
       </main>
 
@@ -181,6 +190,17 @@ function useGuess(): [
   return [guess, setGuess];
 }
 
+function usePrevious<T>(value: T): T | undefined {
+  const ref = useRef<T | undefined>();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
+}
+
+/*
 function usePrevious<T>(value: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref: any = useRef<T>();
@@ -191,3 +211,4 @@ function usePrevious<T>(value: T): T {
 
   return ref.current;
 }
+*/
