@@ -27,11 +27,9 @@ export async function isValidGuess(word: string): Promise<boolean> {
     .then((res) => res.data[0].word)
     .catch((error) => {
       console.log('error', error.message)
-      alert("Word not found in our word bank. 😰 \n Please type another one!")
+      // alert("Word not found in our word bank. 😰 \n Please type another one!")
       return false;
     })
-  console.log('validWord =>', validWord);
-  console.log('validWord.length =>', validWord.length);
   return validWord.length === 5 ? true : false;
 }
 
