@@ -1,4 +1,4 @@
-import Keyboard from "./components/Keyboard/Keyboard";
+import Keyboard from "./components/Keyboard";
 import Navbar from "./components/Navbar";
 import WordleBoard from "./components/WordleBoard";
 
