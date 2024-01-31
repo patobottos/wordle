@@ -3,10 +3,11 @@ import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition, isValidGuess } from "../utilities/word-utils";
 import Button from "./Button";
+import { handleKeyPress } from "../utilities/keyboard-utils";
 
 export default function WordleBoard() {
   const state = useStore();
-  const [guess, setGuess] = useGuess();
+  const [guess, setGuess, addGuessLetter] = useGuess();
   const [getInvalidGuess, setInvalidGuess] = useState(false);
   const [definition, setDefinition] = useState<string>("");
 
@@ -41,20 +42,6 @@ export default function WordleBoard() {
       validateGuess();
     }
   }, [guess, previousGuess]);
-
-  /*
-  useEffect(() => {
-    if (guess.length === 0 && previousGuess?.length === WORD_LENGTH) {
-      if (await isValidGuess(previousGuess)) {
-        setInvalidGuess(false);
-        addGuess(previousGuess);
-      } else {
-        setInvalidGuess(true);
-        setGuess(previousGuess);
-      }
-    }
-  }, [guess]);
-  */
 
   // FETCHS THE DEFINITION OF THE RANDOM WORD
   useEffect(() => {
@@ -135,7 +122,6 @@ export default function WordleBoard() {
           </div>
           <Button
             children="New Game"
-            color="black"
             onClick={() => {
               state.newGame();
               setGuess("");
@@ -153,11 +139,8 @@ function useGuess(): [
   (letter: string) => void
 ] {
   const [guess, setGuess] = useState("");
-  //const addGuess = useStore((s) => s.addGuess);
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    const letter = e.key;
-
+  const addGuessLetter = (letter: string) => {
     setGuess((currentGuess) => {
       const newGuess =
         letter.length === 1 ? currentGuess + letter : currentGuess;
@@ -180,6 +163,11 @@ function useGuess(): [
     });
   };
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    let letter = e.key;
+    addGuessLetter(letter);
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
     return () => {
@@ -187,7 +175,7 @@ function useGuess(): [
     };
   }, []);
 
-  return [guess, setGuess];
+  return [guess, setGuess, addGuessLetter];
 }
 
 function usePrevious<T>(value: T): T | undefined {
@@ -199,16 +187,3 @@ function usePrevious<T>(value: T): T | undefined {
 
   return ref.current;
 }
-
-/*
-function usePrevious<T>(value: T): T {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref: any = useRef<T>();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
-}
-*/
