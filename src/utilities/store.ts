@@ -14,6 +14,7 @@ interface StoreState {
   answerWord: string;
   guessRows: GuessRow[];
   gameState: 'playing' | 'won' | 'lost';
+  keyboardLetterState: { [letter: string]: LetterState };
   addGuess: (guess: string) => void;
   newGame(initialGuess?: string[]): void;
 }
@@ -35,8 +36,28 @@ export const useStore = create<StoreState>()(
           }
         ];
 
+        const keyboardLetterState = get().keyboardLetterState;
+        result.forEach((r, index) => {
+          const resultGuessLetter = guess[index];
+
+          const currentLetterState = keyboardLetterState[resultGuessLetter];
+          switch (currentLetterState) {
+            case LetterState.Match:
+              break;
+            case LetterState.Present:
+              if (r === LetterState.Miss) {
+                break;
+              }
+              break;
+            default:
+              keyboardLetterState[resultGuessLetter] = r;
+              break;
+          }
+        });
+
         set({
           guessRows,
+          keyboardLetterState,
           gameState: didWin
             ? 'won'
             : guessRows.length === GUESS_CHANCES
@@ -49,6 +70,7 @@ export const useStore = create<StoreState>()(
         answerWord: getRandomWordEng(),
         guessRows: [],
         gameState: 'playing',
+        keyboardLetterState: {},
         addGuess,
 
         newGame: (initialRows = []) => {
@@ -56,6 +78,7 @@ export const useStore = create<StoreState>()(
             answerWord: getRandomWordEng(),
             guessRows: [],
             gameState: 'playing',
+            keyboardLetterState: {},
           })
         }
       }

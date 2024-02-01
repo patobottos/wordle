@@ -1,5 +1,3 @@
-import React from "react";
-
 export const handleKeyPress = (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   onClickProps: (key: string) => void

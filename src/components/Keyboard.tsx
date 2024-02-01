@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { handleKeyPress } from "../utilities/keyboard-utils";
+import { useStore } from "../utilities/store";
+import { LetterState } from "../utilities/word-utils";
 
 interface KeyboardProps {
   onClick: (key: string) => void;
@@ -15,6 +17,9 @@ const keyboardKeys: string[][] = [
 const backspace = "test hello"; // DELETE AT THE END, I THINK I'M NOT USING IT
 
 export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
+  const keyboardLetterState = useStore((s) => s.keyboardLetterState);
+  console.log("estado letra teclado: ", keyboardLetterState);
+
   return (
     <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3">
       {keyboardKeys.map((keyboardRow, rowIndex) => {
@@ -24,9 +29,7 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
               let keyStyles =
                 "text-sm rounded-md font-bold mx-1  w-8 h-10 max-[480px]:w-[6vw] max-[375px]:mx-[2px] uppercase flex-1 py-2";
 
-              if (char !== "") {
-                keyStyles += " bg-slate-200 ";
-              }
+              const letterState = keyStateStyles[keyboardLetterState[char]];
 
               if (char === "") {
                 keyStyles += " pointer-events-none ";
@@ -35,6 +38,12 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
               if (char.length > 1) {
                 keyStyles =
                   " text-xs uppercase rounded-md font-bold mx-1 bg-slate-200 w-14 h-10 max-[480px]:w-11 max-[375px]:mx-[2px] ";
+              }
+
+              if (letterState) {
+                keyStyles += ` ${letterState}`;
+              } else if (char !== "") {
+                keyStyles += " bg-slate-200 ";
               }
 
               return char === "Backspace" ? (
@@ -61,3 +70,9 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
     </div>
   );
 }
+
+const keyStateStyles = {
+  [LetterState.Miss]: "bg-gray-400",
+  [LetterState.Present]: "bg-yellow-400",
+  [LetterState.Match]: "bg-green-600",
+};
