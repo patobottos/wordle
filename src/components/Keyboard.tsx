@@ -3,7 +3,7 @@ import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { handleKeyPress } from "../utilities/keyboard-utils";
 
 interface KeyboardProps {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>, key: string) => void;
+  onClick: (key: string) => void;
 }
 
 const keyboardKeys: string[][] = [

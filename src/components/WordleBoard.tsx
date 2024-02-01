@@ -3,7 +3,7 @@ import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition, isValidGuess } from "../utilities/word-utils";
 import Button from "./Button";
-import { handleKeyPress } from "../utilities/keyboard-utils";
+import Keyboard from "./Keyboard";
 
 export default function WordleBoard() {
   const state = useStore();
@@ -35,13 +35,13 @@ export default function WordleBoard() {
             setGuess(previousGuess);
           }
         } catch (error) {
-          console.log(error);
+          console.error("Error validating guess:", error);
         }
       };
 
       validateGuess();
     }
-  }, [guess, previousGuess]);
+  }, [guess, previousGuess, addGuess, setGuess]);
 
   // FETCHS THE DEFINITION OF THE RANDOM WORD
   useEffect(() => {
@@ -73,7 +73,7 @@ export default function WordleBoard() {
   const endOfGame = state.gameState !== "playing";
 
   return (
-    <div className="flex flex-col justify-center max-w-[370px]">
+    <div className="flex flex-col justify-center items-center max-w-[370px]">
       <main>
         {rows.map(({ guess, result }, index) => (
           <WordRow
@@ -92,6 +92,7 @@ export default function WordleBoard() {
           Meaning: "<span className="italic">{definition}</span>"
         </div>
       )}
+      <Keyboard onClick={(letter) => addGuessLetter(letter)} />
 
       {endOfGame && (
         <div
@@ -164,7 +165,7 @@ function useGuess(): [
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
-    let letter = e.key;
+    const letter = e.key;
     addGuessLetter(letter);
   };
 
