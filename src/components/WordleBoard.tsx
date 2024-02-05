@@ -14,7 +14,7 @@ export default function WordleBoard() {
   useEffect(() => {
     let id: NodeJS.Timeout;
     if (getInvalidGuess) {
-      id = setTimeout(() => setInvalidGuess(false), 1500);
+      id = setTimeout(() => setInvalidGuess(false), 1800);
     }
     return () => clearTimeout(id);
   }, [getInvalidGuess]);
@@ -69,11 +69,18 @@ export default function WordleBoard() {
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
   const isGameOver = state.gameState === "lost";
-  // const gotAWinner = state.gameState === "won"; // => NOT USING IT BY NOW
+
   const endOfGame = state.gameState !== "playing";
 
   return (
+    // THIS IS THE WORDLEBOARD
     <div className="flex flex-col justify-center items-center max-w-[370px] flex-grow">
+      {getInvalidGuess && (
+        <div className="bg-black text-white font-Inter text-xs font-bold h-8 m-4 p-2 text-center w-52 ">
+          Not in our word list! : (
+        </div>
+      )}
+
       <main>
         {rows.map(({ guess, result }, index) => (
           <WordRow
