@@ -73,7 +73,7 @@ export default function WordleBoard() {
   const endOfGame = state.gameState !== "playing";
 
   return (
-    <div className="flex flex-col justify-center items-center max-w-[370px]">
+    <div className="flex flex-col justify-center items-center max-w-[370px] flex-grow">
       <main>
         {rows.map(({ guess, result }, index) => (
           <WordRow
@@ -88,7 +88,7 @@ export default function WordleBoard() {
       </main>
 
       {!isGameOver && (
-        <div className="mt-4 w-25 bg-slate-300  max-w-60">
+        <div className="mt-4 w-25 bg-slate-300  max-w-60 xs:w-[320px] xxs:w-[300px]">
           Meaning: "<span className="italic">{definition}</span>"
         </div>
       )}

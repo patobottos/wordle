@@ -21,13 +21,13 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
   console.log("estado letra teclado: ", keyboardLetterState);
 
   return (
-    <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3">
+    <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3  ">
       {keyboardKeys.map((keyboardRow, rowIndex) => {
         return (
           <div key={rowIndex} className="flex flex-row justify-center">
             {keyboardRow.map((char, index) => {
               let keyStyles =
-                "text-sm rounded-md font-bold mx-1  w-8 h-10 max-[480px]:w-[6vw] max-[375px]:mx-[2px] uppercase flex-1 py-2";
+                "text-sm rounded-md font-bold mx-1 w-8 h-10 xs:w-6 xxs:mx-[1px] xxs:w-5 uppercase flex-1 py-2";
 
               const letterState = keyStateStyles[keyboardLetterState[char]];
 
@@ -37,7 +37,7 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
 
               if (char.length > 1) {
                 keyStyles =
-                  " text-xs uppercase rounded-md font-bold mx-1 bg-slate-200 w-14 h-10 max-[480px]:w-11 max-[375px]:mx-[2px] ";
+                  " text-xs uppercase rounded-md font-bold mx-1 bg-slate-200 w-14 h-10 xs:w-11 xxs:mx-[2px] ";
               }
 
               if (letterState) {
@@ -49,7 +49,7 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
               return char === "Backspace" ? (
                 <button
                   key={char + index}
-                  className="text-lg rounded-md font-bold mx-1 bg-slate-200 w-12 h-10 max-[480px]:w-10 max-[375px]:mx-[2px]"
+                  className="text-lg rounded-md font-bold mx-1 bg-slate-200 w-12 h-10 xs:w-10 xxs:mx-[2px]"
                   onClick={(e) => handleKeyPress(e, onClickProps)}
                 >
                   <FontAwesomeIcon icon={faDeleteLeft} className="-ms-1" />
