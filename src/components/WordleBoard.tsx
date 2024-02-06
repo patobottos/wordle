@@ -3,6 +3,7 @@ import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition, isValidGuess } from "../utilities/word-utils";
 import Button from "./Button";
+import HintButton from "./HintButton";
 import Keyboard from "./Keyboard";
 
 export default function WordleBoard() {
@@ -10,6 +11,7 @@ export default function WordleBoard() {
   const [guess, setGuess, addGuessLetter] = useGuess();
   const [getInvalidGuess, setInvalidGuess] = useState(false);
   const [definition, setDefinition] = useState<string>("");
+  const [hint, setHint] = useState(false);
 
   useEffect(() => {
     let id: NodeJS.Timeout;
@@ -74,9 +76,9 @@ export default function WordleBoard() {
 
   return (
     // THIS IS THE WORDLEBOARD
-    <div className="flex-1 flex-col justify-center items-center max-w-[359px] flex-grow p-1">
+    <div className="flex-1 flex-col justify-center items-center flex-grow p-1 relative max-w-[420px] xxs:max-w-[359px]">
       {getInvalidGuess && (
-        <div className="bg-black rounded text-white font-Inter text-xs font-bold h-6 m-4 p-2 text-center w-52 relative top-[-46px] shadow-md">
+        <div className="absolute top-[-26px] inset-0 mx-auto  bg-black rounded text-white font-Inter text-xs font-bold h-6 w-52 p-2 text-center  shadow-xl justify-center">
           Not in our word list! ¯\(0_o)/¯
         </div>
       )}
@@ -93,12 +95,19 @@ export default function WordleBoard() {
           />
         ))}
       </main>
+      <div className="my-4 mx-auto flex justify-center items-center">
+        <HintButton
+          children="Give me a hint! 🙏 "
+          onClick={() => setHint(true)}
+          isVisible={!hint}
+        ></HintButton>
 
-      {!isGameOver && (
-        <div className="mt-4 p-2 w-25 bg-slate-100 max-w-60 xs:w-[320px] xxs:w-[300px]">
-          Meaning: "<span className="italic">{definition}</span>"
-        </div>
-      )}
+        {!isGameOver && hint && (
+          <div className="bg-red-400 my-4 text-center">
+            Meaning: "<span className="italic">{definition}</span>"
+          </div>
+        )}
+      </div>
       <Keyboard onClick={(letter) => addGuessLetter(letter)} />
 
       {endOfGame && (
@@ -133,6 +142,7 @@ export default function WordleBoard() {
             onClick={() => {
               state.newGame();
               setGuess("");
+              setHint(false);
             }}
           ></Button>
         </div>

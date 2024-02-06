@@ -17,6 +17,7 @@ interface StoreState {
   keyboardLetterState: { [letter: string]: LetterState };
   addGuess: (guess: string) => void;
   newGame(initialGuess?: string[]): void;
+  hint: boolean
 }
 
 export const useStore = create<StoreState>()(
@@ -71,6 +72,7 @@ export const useStore = create<StoreState>()(
         guessRows: [],
         gameState: 'playing',
         keyboardLetterState: {},
+        hint: false,
         addGuess,
 
         newGame: (initialRows = []) => {
@@ -78,7 +80,7 @@ export const useStore = create<StoreState>()(
             answerWord: getRandomWordEng(),
             guessRows: [],
             gameState: 'playing',
-            keyboardLetterState: {},
+            keyboardLetterState: {}
           })
         }
       }

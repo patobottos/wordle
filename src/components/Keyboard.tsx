@@ -20,7 +20,7 @@ export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
   const keyboardLetterState = useStore((s) => s.keyboardLetterState);
 
   return (
-    <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3">
+    <div className="flex flex-col justify-center rounded-lg my-2 p-2 space-y-3">
       {keyboardKeys.map((keyboardRow, rowIndex) => {
         return (
           <div key={rowIndex} className="flex flex-row justify-center">
