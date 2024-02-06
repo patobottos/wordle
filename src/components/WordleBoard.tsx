@@ -5,6 +5,8 @@ import { findDefinition, isValidGuess } from "../utilities/word-utils";
 import Button from "./Button";
 import HintButton from "./HintButton";
 import Keyboard from "./Keyboard";
+import Lottie from "lottie-react";
+import Confetti from "../assets/confetti.json";
 
 export default function WordleBoard() {
   const state = useStore();
@@ -78,7 +80,7 @@ export default function WordleBoard() {
     // THIS IS THE WORDLEBOARD
     <div className="flex-1 flex-col justify-center items-center flex-grow p-1 relative max-w-[420px] xxs:max-w-[359px]">
       {getInvalidGuess && (
-        <div className="absolute top-[-26px] inset-0 mx-auto  bg-black rounded text-white font-Inter text-xs font-bold h-6 w-52 p-2 text-center  shadow-xl justify-center">
+        <div className="absolute top-[-28px] inset-0 mx-auto  bg-black rounded text-white font-Inter text-xs font-bold h-8 w-52 p-2 text-center  shadow-xl justify-center">
           Not in our word list! ¯\(0_o)/¯
         </div>
       )}
@@ -103,7 +105,7 @@ export default function WordleBoard() {
         ></HintButton>
 
         {!isGameOver && hint && (
-          <div className="bg-red-400 my-4 text-center">
+          <div className="bg-slate-200 my-4 text-center p-2 rounded">
             Meaning: "<span className="italic">{definition}</span>"
           </div>
         )}
@@ -113,7 +115,9 @@ export default function WordleBoard() {
       {endOfGame && (
         <div
           role="modal"
-          className="absolute bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] p-4 left-0 right-0 mx-auto top-[110px] shadow-xl"
+          className="absolute top-0 bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] p-4 left-0 right-0 mx-auto shadow-2xl
+          flex-grow max-w-[420px] xxs:max-w-[359px]
+          "
         >
           <p className="mt-3 font-bold tracking-wider uppercase">
             {isGameOver ? (
@@ -122,6 +126,11 @@ export default function WordleBoard() {
               </div>
             ) : (
               <div>
+                <Lottie
+                  animationData={Confetti}
+                  loop={true}
+                  className="absolute top-0 left-0"
+                ></Lottie>
                 <span>Congratulations!</span>
                 <br />
                 <span>We've got a winner!</span>
@@ -145,6 +154,9 @@ export default function WordleBoard() {
               setHint(false);
             }}
           ></Button>
+          <button className="bg-black text-white mx-4 rounded h-8">
+            confetti
+          </button>
         </div>
       )}
     </div>
