@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen flex flex-col items-center mx-auto">
+    <div className="flex flex-col min-h-screen items-center mx-auto">
       <Navbar />
       <WordleBoard />
       <Footer />

@@ -19,7 +19,7 @@ export default function WordRow({
     .concat(Array(lettersRemaining).fill(""));
 
   return (
-    <div className="flex flex-col align-middle justify-center text-center">
+    <div className="flex flex-col justify-center items-center">
       <div className={`flex ${className}`}>
         {lettersArray.map((char, index) => {
           return <Tile key={index} value={char} state={result[index]} />;

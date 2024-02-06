@@ -14,7 +14,7 @@ export default function WordleBoard() {
   useEffect(() => {
     let id: NodeJS.Timeout;
     if (getInvalidGuess) {
-      id = setTimeout(() => setInvalidGuess(false), 1800);
+      id = setTimeout(() => setInvalidGuess(false), 2300);
     }
     return () => clearTimeout(id);
   }, [getInvalidGuess]);
@@ -74,10 +74,10 @@ export default function WordleBoard() {
 
   return (
     // THIS IS THE WORDLEBOARD
-    <div className="flex flex-col justify-center items-center max-w-[370px] flex-grow">
+    <div className="flex-1 flex-col justify-center items-center max-w-[359px] flex-grow p-1">
       {getInvalidGuess && (
-        <div className="bg-black text-white font-Inter text-xs font-bold h-8 m-4 p-2 text-center w-52 ">
-          Not in our word list! : (
+        <div className="bg-black rounded text-white font-Inter text-xs font-bold h-6 m-4 p-2 text-center w-52 relative top-[-46px] shadow-md">
+          Not in our word list! ¯\(0_o)/¯
         </div>
       )}
 
@@ -95,7 +95,7 @@ export default function WordleBoard() {
       </main>
 
       {!isGameOver && (
-        <div className="mt-4 w-25 bg-slate-300  max-w-60 xs:w-[320px] xxs:w-[300px]">
+        <div className="mt-4 p-2 w-25 bg-slate-100 max-w-60 xs:w-[320px] xxs:w-[300px]">
           Meaning: "<span className="italic">{definition}</span>"
         </div>
       )}

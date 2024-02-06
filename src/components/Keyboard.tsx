@@ -18,10 +18,9 @@ const backspace = "test hello"; // DELETE AT THE END, I THINK I'M NOT USING IT
 
 export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
   const keyboardLetterState = useStore((s) => s.keyboardLetterState);
-  console.log("estado letra teclado: ", keyboardLetterState);
 
   return (
-    <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3  ">
+    <div className="flex flex-col justify-center rounded-lg m-2 p-4 space-y-3">
       {keyboardKeys.map((keyboardRow, rowIndex) => {
         return (
           <div key={rowIndex} className="flex flex-row justify-center">
