@@ -13,7 +13,7 @@ const HintButton: React.FC<HintButtonProps> = ({
     isVisible && (
       <button
         onClick={onClick}
-        className={`rounded bg-teal-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal tracking-wide text-black shadow-md hover:text-white hover:shadow-2xl hover:bg-teal-600 hover:ring-sky-500 animate-pulse font-medium`}
+        className={`rounded bg-teal-500 px-6 pb-2 pt-2.5 text-xs font-bold uppercase leading-normal tracking-wide text-black shadow-md hover:text-white hover:shadow-2xl hover:bg-teal-600 hover:ring-sky-500 animate-pulse`}
       >
         {children}
       </button>

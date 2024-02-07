@@ -6,7 +6,7 @@ import Button from "./Button";
 import HintButton from "./HintButton";
 import Keyboard from "./Keyboard";
 import Lottie from "lottie-react";
-import Confetti from "../assets/confetti.json";
+import confetti from "../assets/confetti.json";
 
 export default function WordleBoard() {
   const state = useStore();
@@ -104,7 +104,7 @@ export default function WordleBoard() {
           isVisible={!hint}
         ></HintButton>
 
-        {!isGameOver && hint && (
+        {!isGameOver && hint && state.gameState !== "won" && (
           <div className="bg-slate-200 my-4 text-center p-2 rounded">
             Meaning: "<span className="italic">{definition}</span>"
           </div>
@@ -126,11 +126,16 @@ export default function WordleBoard() {
               </div>
             ) : (
               <div>
-                <Lottie
-                  animationData={Confetti}
-                  loop={true}
-                  className="absolute top-0 left-0"
-                ></Lottie>
+                <div className="absolute top-0 right-0 z-10 pointer-events-none">
+                  <Lottie
+                    animationData={confetti}
+                    loop={true}
+                    autoplay={true}
+                    rendererSettings={{
+                      preserveAspectRatio: "xMidYMid slice",
+                    }}
+                  ></Lottie>
+                </div>
                 <span>Congratulations!</span>
                 <br />
                 <span>We've got a winner!</span>
@@ -147,16 +152,13 @@ export default function WordleBoard() {
             </p>
           </div>
           <Button
-            children="New Game"
+            children="New Game!"
             onClick={() => {
               state.newGame();
               setGuess("");
               setHint(false);
             }}
-          ></Button>
-          <button className="bg-black text-white mx-4 rounded h-8">
-            confetti
-          </button>
+          />
         </div>
       )}
     </div>
