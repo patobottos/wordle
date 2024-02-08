@@ -10,6 +10,8 @@ Embark on a language journey crafted with love for our young explorers, aged **b
 
 <video controls src="public/wordle_play.mp4" title="Kids Wordle Adventure"></video>
 
+![Wordle Adventure](public/wordle.png)
+
 ## Table of Contents
 
 - [Usage](#usage)
@@ -34,13 +36,7 @@ Explore these features to make your Wordle gaming experience enjoyable!
 
 ## Contributing
 
-If you'd like to contribute to the Wordle App project, we welcome your input. Follow these steps to contribute:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/new-feature`
-3. Commit your changes: `git commit -m 'Add new feature'`
-4. Push to the branch: `git push origin feature/new-feature`
-5. Submit a pull request
+If you're interested in contributing to this project, please feel free to contact me at patobottos[at]gmail.com.
 
 We appreciate your contributions and feedback!
 
