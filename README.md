@@ -8,7 +8,7 @@ Guess the hidden word by entering different combinations, and enjoy the challeng
 
 Embark on a language journey crafted with love for our young explorers, aged **between 7 and 11 years old**. 🧒 📚 ✨
 
-![Wordle Adventure](public/wordle_play.mp4)
+![Wordle Adventure Example](public/wordle_play.gif)
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Credits
 
 - **Developer**: [Pato Bottos](https://patobottos.vercel.app/)
-- **Mentor**: [Harry Wolff](https://hswolff.com/)
+- **Spiritual mentor!** [Harry Wolff](https://hswolff.com/)
 - **Place and Date**: Barcelona, February 2024
 
 ## Contact Information
@@ -57,7 +57,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 I would like to acknowledge the following for their support and contributions to this project:
 
-- Harry Wolff detailed explanation on his Reacdle.
-- My family for their unwavering support and encouragement.
+- [Harry Wolff's](https://www.youtube.com/watch?v=t_omcJmOQ_k) detailed explanation on his Reacdle creation process. ✨
+- [Dictionary API ](https://dictionaryapi.dev/), whose mission is to provide users with an API that they can use to build a game, learning application, or next-generation speech and text technology. 📚
+- [Lottie Files](https://lottiefiles.com/), for creating and sharing such beautiful amimations! 🎉
+- My family for their unwavering support and encouragement. ❤️
 
 Enjoy playing Wordle!
