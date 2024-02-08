@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import WordRow from "./Grid/WordRow";
 import { useStore, WORD_LENGTH, GUESS_CHANCES } from "../utilities/store";
 import { findDefinition, isValidGuess } from "../utilities/word-utils";
@@ -172,7 +172,7 @@ function useGuess(): [
 ] {
   const [guess, setGuess] = useState("");
 
-  const addGuessLetter = (letter: string) => {
+  const addGuessLetter = useCallback((letter: string) => {
     setGuess((currentGuess) => {
       const newGuess =
         letter.length === 1 ? currentGuess + letter : currentGuess;
@@ -193,19 +193,22 @@ function useGuess(): [
 
       return newGuess;
     });
-  };
+  }, []);
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    const letter = e.key;
-    addGuessLetter(letter);
-  };
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      const letter = e.key;
+      addGuessLetter(letter);
+    },
+    [addGuessLetter]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
+  }, [onKeyDown]);
 
   return [guess, setGuess, addGuessLetter];
 }

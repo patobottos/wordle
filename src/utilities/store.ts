@@ -81,12 +81,15 @@ export const useStore = create<StoreState>()(
             guessRows: [],
             gameState: 'playing',
             keyboardLetterState: {}
-          })
-        }
-      }
+          });
+          initialRows.forEach(addGuess);
+
+        },
+      };
     },
     {
       name: "wordle",
+      getStorage: () => localStorage,
     },
   )
 );
