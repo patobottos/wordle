@@ -16,6 +16,11 @@ export default function WordleBoard() {
   const [hint, setHint] = useState(false);
 
   useEffect(() => {
+    setGuess("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     let id: NodeJS.Timeout;
     if (getInvalidGuess) {
       id = setTimeout(() => setInvalidGuess(false), 2300);
