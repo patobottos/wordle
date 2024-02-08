@@ -8,9 +8,7 @@ Guess the hidden word by entering different combinations, and enjoy the challeng
 
 Embark on a language journey crafted with love for our young explorers, aged **between 7 and 11 years old**. 🧒 📚 ✨
 
-<video controls src="public/wordle_play.mp4" title="Kids Wordle Adventure"></video>
-
-![Wordle Adventure](public/wordle.png)
+![Wordle Adventure](public/wordle_play.mp4)
 
 ## Table of Contents
 
