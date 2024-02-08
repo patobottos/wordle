@@ -1,13 +1,7 @@
 import { describe, expect, test } from "vitest";
 import App from "./App";
 import { useStore } from "./utilities/store";
-import {
-  render,
-  screen,
-  fireEvent,
-  userEvent,
-  within,
-} from "./test/test-utils";
+import { render, screen, userEvent } from "./test/test-utils";
 import WordRow from "./components/Grid/WordRow";
 
 describe("App", () => {
@@ -53,14 +47,14 @@ describe("App", () => {
   test("shows lost game state", () => {
     useStore.getState().newGame(Array(6).fill("hello"));
     render(<App />);
-    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     expect(screen.getByText("Game Over")).toBeInTheDocument();
   });
 
   test("show won game state", () => {
     const initialState = Array(2).fill("hello");
     useStore.getState().newGame(initialState);
-    const answer = useStore.getState().answer;
+    const answer = useStore.getState().answerWord;
     useStore.getState().addGuess(answer);
 
     render(<App />);
@@ -69,7 +63,7 @@ describe("App", () => {
     expect(document.querySelector("main")?.textContent).toEqual(
       initialState.join("") + answer
     );
-    // @ts-expect-error
+
     expect(screen.getByText("Game Over")).toBeInTheDocument();
   });
 
