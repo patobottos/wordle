@@ -8,6 +8,8 @@ Guess the hidden word by entering different combinations, and enjoy the challeng
 
 Embark on a language journey crafted with love for our young explorers, aged **between 7 and 11 years old**. 🧒 📚 ✨
 
+<video controls src="public/wordle_play.mp4" title="Kids Wordle Adventure"></video>
+
 ## Table of Contents
 
 - [Usage](#usage)
@@ -28,6 +30,7 @@ The Wordle App comes with several features to enhance your word-guessing experie
 - **Feature 1:** Interactive and user-friendly interface.
 - **Feature 2:** Dynamic word selection for an engaging challenge, out of a 500 words word bank, especially chosen for the younger ones.
 - **Feature 3:** Real-time feedback on your word guesses.
+- **Feature 4:** Hint button to help solve the quizz, with online definitions to help learn the meanings.
 
 Explore these features to make your Wordle gaming experience enjoyable!
 
