@@ -21,20 +21,19 @@ interface StoreState {
 }
 
 export const useStore = create<StoreState>()(
-  persist(
+  persist<StoreState>(
     (set, get) => {
-
       const addGuess = (guess: string) => {
         const result = computeGuess(guess, get().answerWord);
 
-        const didWin = result.every(i => i === LetterState.Match);
+        const didWin = result.every((i) => i === LetterState.Match);
 
         const guessRows = [
           ...get().guessRows,
           {
             guess,
             result,
-          }
+          },
         ];
 
         const keyboardLetterState = get().keyboardLetterState;
@@ -64,34 +63,36 @@ export const useStore = create<StoreState>()(
             : guessRows.length === GUESS_CHANCES
               ? 'lost'
               : 'playing',
-        })
+        });
       };
 
       return {
         answerWord: getRandomWordEng(),
-        guessRows: [],
+        guessRows: [] as GuessRow[],
         gameState: 'playing',
         keyboardLetterState: {},
         hint: false,
         addGuess,
 
         newGame: (initialRows = []) => {
+          console.log('useStore persist', useStore.persist);
+          //useStore.persist.clearStorage();
           set({
             answerWord: getRandomWordEng(),
-            guessRows: [],
+            guessRows: [] as GuessRow[],
             gameState: 'playing',
-            keyboardLetterState: {}
+            keyboardLetterState: {},
           });
           initialRows.forEach(addGuess);
-
         },
       };
     },
     {
-      name: "wordle",
+      name: 'wordle',
       getStorage: () => localStorage,
-    },
+    }
   )
 );
+
 
 // useStore.persist.clearStorage();

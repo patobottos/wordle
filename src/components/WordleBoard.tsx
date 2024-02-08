@@ -72,9 +72,7 @@ export default function WordleBoard() {
 
   rows = rows.concat(Array(guessesRemaining).fill(""));
 
-  const isGameOver = state.gameState === "lost";
-
-  const endOfGame = state.gameState !== "playing";
+  const isGameOver = state.gameState !== "playing";
 
   return (
     // THIS IS THE WORDLEBOARD
@@ -97,12 +95,15 @@ export default function WordleBoard() {
           />
         ))}
       </main>
+
       <div className="my-4 mx-auto flex justify-center items-center">
-        <HintButton
-          children="Give me a hint! 🙏 "
-          onClick={() => setHint(true)}
-          isVisible={!hint}
-        ></HintButton>
+        {!hint && !isGameOver && (
+          <HintButton
+            children="Give me a hint! 🙏 "
+            onClick={() => setHint(true)}
+            isVisible={!hint}
+          ></HintButton>
+        )}
 
         {!isGameOver && hint && state.gameState !== "won" && (
           <div className="bg-slate-200 my-4 text-center p-2 rounded">
@@ -112,20 +113,21 @@ export default function WordleBoard() {
       </div>
       <Keyboard onClick={(letter) => addGuessLetter(letter)} />
 
-      {endOfGame && (
+      {isGameOver && (
         <div
           role="modal"
-          className="absolute top-0 bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] p-4 left-0 right-0 mx-auto shadow-2xl
+          className="flex flex-col justify-between p-6 absolute top-0 bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] left-0 right-0 mx-auto shadow-2xl
           flex-grow max-w-[420px] xxs:max-w-[359px]
           "
         >
-          <p className="mt-3 font-bold tracking-wider uppercase">
-            {isGameOver ? (
+          <div className="font-bold tracking-wider uppercase">
+            {state.gameState === "lost" ? (
               <div>
                 <span>Game over! 😵 </span>
               </div>
             ) : (
               <div>
+                {/* CONFETTI ANIMATION FOR THE WINNERS!*/}
                 <div className="absolute top-0 right-0 z-10 pointer-events-none">
                   <Lottie
                     animationData={confetti}
@@ -141,8 +143,8 @@ export default function WordleBoard() {
                 <span>We've got a winner!</span>
               </div>
             )}
-          </p>
-          <div className="flex flex-col mx-auto mt-4 p-2 w-[300px] bg-orange-200 rounded shadow-lg justify-center">
+          </div>
+          <div className="flex flex-col mx-auto m-2 p-2 w-[300px] bg-orange-200 rounded shadow-lg justify-center">
             <p>The answer was:</p>
             <p className="text-center font-Inter font-bold text-[32px] uppercase tracking-widest">
               {state.answerWord}
