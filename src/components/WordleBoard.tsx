@@ -122,15 +122,14 @@ export default function WordleBoard() {
 
       {isGameOver && (
         <div
-          role="modal"
           className="flex flex-col justify-between p-6 absolute top-0 bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] left-0 right-0 mx-auto shadow-2xl
           flex-grow max-w-[420px] xxs:max-w-[359px]
           "
         >
           <div className="font-bold tracking-wider uppercase">
             {state.gameState === "lost" ? (
-              <div role="modal">
-                <span>Game over! 😵 </span>
+              <div>
+                <span role="modal">Game over! 😵 </span>
               </div>
             ) : (
               <div>
@@ -143,7 +142,7 @@ export default function WordleBoard() {
                     rendererSettings={{
                       preserveAspectRatio: "xMidYMid slice",
                     }}
-                  ></Lottie>
+                  />
                 </div>
                 <span>Congratulations!</span>
                 <br />
