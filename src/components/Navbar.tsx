@@ -1,6 +1,6 @@
 function Navbar() {
   return (
-    <header className="flex flex-row justify-center mx-4 mt-4 mb-8 border-b-2 w-[90vw]">
+    <header className="flex flex-row justify-center m-4 border-b-2 w-[90vw]">
       <h1
         className="text-slate-600 mb-6 font-extrabold font-Lora 
         text-6xl tracking-wider   

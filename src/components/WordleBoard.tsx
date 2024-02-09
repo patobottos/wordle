@@ -101,18 +101,20 @@ export default function WordleBoard() {
         ))}
       </main>
 
-      <div className="my-4 mx-auto flex justify-center items-center">
+      <div className="flex justify-center items-center my-2 mx-auto h-[100px]">
         {!hint && !isGameOver && (
           <HintButton
-            children="Give me a hint! 🙏 "
+            children="Give me a hint!  🙏"
             onClick={() => setHint(true)}
             isVisible={!hint}
-          ></HintButton>
+          />
         )}
 
         {!isGameOver && hint && state.gameState !== "won" && (
-          <div className="bg-slate-200 my-4 text-center p-2 rounded">
-            Meaning: "<span className="italic">{definition}</span>"
+          <div className="bg-purple-100 my-4 p-2 rounded flex-1 h-full overflow-y-auto">
+            <p className="text-center">
+              Meaning: "<span className="italic">{definition}</span>"
+            </p>
           </div>
         )}
       </div>
@@ -127,7 +129,7 @@ export default function WordleBoard() {
         >
           <div className="font-bold tracking-wider uppercase">
             {state.gameState === "lost" ? (
-              <div>
+              <div role="modal">
                 <span>Game over! 😵 </span>
               </div>
             ) : (
@@ -183,7 +185,7 @@ function useGuess(): [
     setGuess((currentGuess) => {
       const newGuess =
         letter.length === 1 ? currentGuess + letter : currentGuess;
-      console.log(letter, { currentGuess });
+      //console.log(letter, { currentGuess });
 
       switch (letter) {
         case "Backspace":

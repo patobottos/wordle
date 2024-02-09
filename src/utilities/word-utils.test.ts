@@ -9,12 +9,12 @@ describe("getRandomWord", () => {
 });
 
 describe("isValidGuess", () => {
-  test("it detects a valid word", () => {
-    expect(isValidGuess("close")).toBe(true);
+  test("it detects a valid word", async () => {
+    expect(await isValidGuess("close")).toBe(true);
   });
 
-  test("it detects and invalid word", () => {
-    expect(isValidGuess("frdsa")).toBe(false);
+  test("it detects and invalid word", async () => {
+    expect(await isValidGuess("frdsa")).toBe(false);
   });
 });
 

@@ -4,8 +4,6 @@ export const handleKeyPress = (
 ) => {
   // Ensure that e.currentTarget is defined
   if (e.currentTarget) {
-    const letter = e.currentTarget.textContent;
-    console.log("tecla apretada en screen: ", letter);
     const { textContent, innerHTML } = e.currentTarget;
 
     let returnProps = textContent!;

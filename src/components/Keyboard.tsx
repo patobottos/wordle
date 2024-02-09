@@ -14,7 +14,7 @@ const keyboardKeys: string[][] = [
   ["Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"],
 ];
 
-const backspace = "test hello"; // DELETE AT THE END, I THINK I'M NOT USING IT
+const backspace = ""; // DELETE AT THE END, I THINK I'M NOT USING IT
 
 export default function Keyboard({ onClick: onClickProps }: KeyboardProps) {
   const keyboardLetterState = useStore((s) => s.keyboardLetterState);

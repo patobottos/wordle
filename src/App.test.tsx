@@ -4,6 +4,11 @@ import { useStore } from "./utilities/store";
 import { render, screen, userEvent } from "./test/test-utils";
 import WordRow from "./components/Grid/WordRow";
 
+// Mock the Lottie library
+jest.mock("lottie-react", () => ({
+  Lottie: () => null, // Provide a simple mock component
+}));
+
 describe("App", () => {
   test("the title is visible", () => {
     render(<App />);
@@ -40,7 +45,8 @@ describe("App", () => {
     render(<App />);
 
     // Use a custom query function to check for the presence of "Game over" text
-    const gameOverText = document.querySelector("[role=modal] p");
+    const gameOverText = document.querySelector("[role=modal] div");
+    console.log("gameOverText:", gameOverText);
     expect(gameOverText?.textContent).toContain("Game over");
   });
 
