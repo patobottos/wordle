@@ -123,7 +123,7 @@ export default function WordleBoard() {
       {isGameOver && (
         <div
           className="flex flex-col justify-between p-6 absolute top-0 bg-opacity-90 bg-teal-100 border border-teal-300 rounded text-center w-[380px] h-[400px] left-0 right-0 mx-auto shadow-2xl
-          flex-grow max-w-[420px] xxs:max-w-[359px]
+          flex-grow max-w-[420px] xxs:max-w-[340px]
           "
         >
           <div className="font-bold tracking-wider uppercase">
