@@ -19,7 +19,7 @@ Embark on a language journey crafted with love for our young explorers, aged **b
 
 ## Usage
 
-To play the Wordle App online, simply visit [your-app-url] in your web browser. No installation is required, and you can start playing right away.
+To play the Wordle App online, simply visit [wordle-adventure.vercel.app](https://wordle-adventure.vercel.app/) in your web browser. No installation is required, and you can start playing right away.
 
 ## Features
 
